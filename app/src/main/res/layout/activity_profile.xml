@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    >
+
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="60dp"
+        app:contentPadding="20dp"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="8dp"
+        >
+
+        <LinearLayout
+            android:id="@+id/profile_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical">
+
+            <!-- 用户头像 -->
+            <ImageView
+                android:id="@+id/profile_avatar"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/avator_1" />
+
+            <!-- 文本信息容器 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/profile_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/profile_desc_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textSize="14sp"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:textColor="@android:color/darker_gray"
+                    android:visibility="visible"/>
+
+                <EditText
+                    android:id="@+id/profile_desc_editText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textSize="14sp"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:textColor="@android:color/darker_gray"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <Button
+        android:id="@+id/my_infomation"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:text="修改备注"
+        android:textSize="12sp"
+        android:background="@drawable/rectangle_shallow_grey"
+        android:gravity="start|center_vertical"
+        android:drawableStart="@drawable/scaled_me"
+        android:drawablePadding="19dp"
+        app:layout_constraintTop_toBottomOf="@id/profile_info"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="21dp">
+
+    </Button>
+
+    <Button
+        android:id="@+id/my_stars"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:gravity="start|center_vertical"
+        android:background="@drawable/rectangle_shallow_grey"
+        android:text="我的收藏"
+        android:textSize="12sp"
+        android:drawableStart="@drawable/scaled_stars"
+        android:drawablePadding="20dp"
+        app:layout_constraintTop_toBottomOf="@id/my_infomation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+
+        >
+    </Button>
+
+    <Button
+        android:id="@+id/my_history"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:gravity="start|center_vertical"
+        android:background="@drawable/rectangle_shallow_grey"
+        android:text="浏览历史"
+        android:textSize="12sp"
+        android:drawableStart="@drawable/scaled_history"
+        android:drawablePadding="20dp"
+        app:layout_constraintTop_toBottomOf="@id/my_stars"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        >
+
+    </Button>
+
+    <Button
+        android:id="@+id/my_setting"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:gravity="start|center_vertical"
+        android:background="@drawable/rectangle_shallow_grey"
+        android:text="设置"
+        android:textSize="12sp"
+        android:drawableStart="@drawable/scaled_setting"
+        android:drawablePadding="20dp"
+        app:layout_constraintTop_toBottomOf="@id/my_history"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        >
+
+    </Button>
+
+    <Button
+        android:id="@+id/my_about"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:gravity="start|center_vertical"
+        android:background="@drawable/rectangle_shallow_grey"
+        android:text="关于我们"
+        android:textSize="12sp"
+        android:drawableStart="@drawable/scaled_about_us"
+        android:drawablePadding="20dp"
+        app:layout_constraintTop_toBottomOf="@id/my_setting"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        >
+
+    </Button>
+
+    <Button
+        android:id="@+id/my_feedback"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:gravity="start|center_vertical"
+        android:background="@drawable/rectangle_shallow_grey"
+        android:text="意见反馈"
+        android:textSize="12sp"
+        android:drawableStart="@drawable/scaled_feedback"
+        android:drawablePadding="20dp"
+        app:layout_constraintTop_toBottomOf="@id/my_about"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        >
+
+    </Button>
+
+
+    <Button
+        android:id="@+id/my_exit"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:gravity="start|center_vertical"
+        android:background="@drawable/rectangle_shallow_grey"
+        android:text="返回"
+        android:textSize="12sp"
+        android:drawableStart="@drawable/scaled_logout"
+        android:drawablePadding="20dp"
+        app:layout_constraintTop_toBottomOf="@id/my_feedback"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        >
+
+    </Button>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

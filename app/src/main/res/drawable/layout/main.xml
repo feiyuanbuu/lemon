@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/demo_activity_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="activity演示"
+        android:textAllCaps="false"
+        />
+
+    <Button
+        android:id="@+id/activity_toast_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="ToastActivity页面演示"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/activity_recyclerview_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="recycleViewActivity页面演示"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/activity_dialog_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="dialogActivity页面演示"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/activity_layout_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="LayoutActivity页面演示"
+        android:textAllCaps="false" />
+    <Button
+        android:id="@+id/activity_sharepreference_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="SharePreferenceActivity页面演示"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/activity_sqlite_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="SQLiteActivity页面演示"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/activity_drawable_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="DrawableActivity页面演示"
+        android:textAllCaps="false" />
+
+
+    <Button
+        android:id="@+id/activity_demo_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="DemoActivity页面演示"
+        android:textAllCaps="false" />
+
+
+
+</LinearLayout>

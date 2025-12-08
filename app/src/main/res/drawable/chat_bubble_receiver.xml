@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/drawable/chat_bubble_sender.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#FFE0E0E0"/> <!-- 气泡颜色 -->
+    <corners android:bottomLeftRadius="10dp"/> <!-- 左侧圆角 -->
+    <padding android:left="10dp" android:right="10dp" android:top="8dp" android:bottom="8dp"/>
+</shape>
