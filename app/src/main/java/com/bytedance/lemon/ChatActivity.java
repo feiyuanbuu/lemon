@@ -240,9 +240,9 @@ public class ChatActivity extends AppCompatActivity implements MessageAdapter.On
                 "lemonapp://reward/detail?id=123"
         );
 
-        // 设置发送者为当前聊天用户
-//        operationMessage.setUserId(currentUserId);
-//        operationMessage.setReceiverId(currentUserId);
+//         设置发送者为当前聊天用户
+        operationMessage.setUserId(currentUserId);
+        operationMessage.setReceiverId(currentUserId);
 
         // 发送到数据库
         userViewModel.sendMessage(operationMessage);
@@ -253,7 +253,7 @@ public class ChatActivity extends AppCompatActivity implements MessageAdapter.On
 
     @Override
     public void onOperationButtonClick(Usermessage message, String actionUrl) {
-        Log.d("ChatActivity", "运营按钮点击: " + actionUrl);
+        Log.d("feiyuan", "运营按钮点击: " + actionUrl);
 
         // 根据actionUrl处理不同的操作
         if (actionUrl.startsWith("lemonapp://reward/")) {
@@ -262,6 +262,10 @@ public class ChatActivity extends AppCompatActivity implements MessageAdapter.On
             openActivity(actionUrl);
         } else if (actionUrl.startsWith("http")) {
             openWebView(actionUrl);
+        }
+        else {
+
+            showRewardDialog(message);
         }
     }
 

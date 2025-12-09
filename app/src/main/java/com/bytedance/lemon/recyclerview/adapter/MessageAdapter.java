@@ -166,24 +166,6 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             .into(ivMessageAvatar);
                 }
             }
-//            else {
-//                // 如果是运营消息或系统消息，使用系统头像
-//                if (ivMessageAvatar != null) {
-//                    String systemAvatar = avatarMap.get(-1L);
-//                    if (systemAvatar != null) {
-//                        Glide.with(itemView.getContext())
-//                                .load(systemAvatar)
-//                                .placeholder(R.drawable.avator_15)
-//                                .into(ivMessageAvatar);
-//                    } else {
-//                        Glide.with(itemView.getContext())
-//                                .load(R.drawable.avator_21)
-//                                .placeholder(R.drawable.avator_15)
-//                                .into(ivMessageAvatar);
-//                    }
-//                }
-//            }
-
 
             // 加载消息图像
             String messageImageUrl = message.getMessageImageUrl();

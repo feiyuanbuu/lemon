@@ -244,9 +244,9 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     // 同样处理返回键
-    @Override
-    public void onBackPressed() {
-        supportFinishAfterTransition();
-    }
+//    @Override
+//    public void onBackPressed() {
+//        supportFinishAfterTransition();
+//    }
 
 }

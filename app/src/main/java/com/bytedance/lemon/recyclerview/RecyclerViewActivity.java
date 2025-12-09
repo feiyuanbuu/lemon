@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -68,6 +69,9 @@ public class RecyclerViewActivity extends AppCompatActivity {
         adapter = new UserAdapter(RecyclerViewActivity.this, new ArrayList<>()); // 先传空列表
         adapter.setUserRepository(userRepository);
         mRecyclerView.setAdapter(adapter);
+
+        DividerItemDecoration divider = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        mRecyclerView.addItemDecoration(divider);
 
 
         // 5. 【核心】观察数据库数据变化，自动更新UI
