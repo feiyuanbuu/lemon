@@ -103,16 +103,19 @@
 
 
 ## 💡 使用示例
+
+<div align="center">
+
 <img src="./assets/splash.png" alt="开屏界面"/>
 <img src="./assets/list.png" alt="开屏界面"/>
 <img src="./assets/profile.png" alt="开屏界面"/>
 <img src="./assets/chat.png" alt="开屏界面"/>
 
-
+</div>
 
 ## 📷 模拟器
 
-Pixel 9 Pro XL
+- Pixel 9 Pro XL
 
 
 
