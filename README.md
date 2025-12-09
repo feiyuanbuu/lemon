@@ -1,10 +1,6 @@
 # 字节跳动训练营：抖音增长
 
-<div align="center">
-
 *基于Android开发的仿抖音聊天App*
-
-</div>
 
 <div align="center">
 
