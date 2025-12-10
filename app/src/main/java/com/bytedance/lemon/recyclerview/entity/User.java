@@ -1,6 +1,9 @@
 // User.java
 package com.bytedance.lemon.recyclerview.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -12,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity(tableName = "users")
-public class User {
+public class User implements Parcelable {
 //    @PrimaryKey(autoGenerate = true)
     @PrimaryKey
     private long id;
@@ -81,7 +84,48 @@ public class User {
         this.unreadInfoCount = 0;
         this.isPinned = false;
     }
+    // Parcelable实现
+    protected User(Parcel in) {
+        id = in.readLong();
+        name = in.readString();
+        description = in.readString();
+        newest_info = in.readString();
+        isPinned = in.readByte() != 0;
+        create_timestamp = in.readLong();
+        lastMessageTimestamp = in.readLong();
+        avatarUrl = in.readString();
+        unreadInfoCount = in.readInt();
+    }
 
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeString(newest_info);
+        dest.writeByte((byte) (isPinned ? 1 : 0));
+        dest.writeLong(create_timestamp);
+        dest.writeLong(lastMessageTimestamp);
+        dest.writeString(avatarUrl);
+        dest.writeInt(unreadInfoCount);
+    }
     // Getter 和 Setter
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }

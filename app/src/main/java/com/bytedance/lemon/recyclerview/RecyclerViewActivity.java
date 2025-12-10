@@ -1,5 +1,6 @@
 package com.bytedance.lemon.recyclerview;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -27,6 +28,12 @@ import java.util.Random;
 
 import androidx.lifecycle.Observer;
 import android.os.Looper; // 用于Handler
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bytedance.lemon.recyclerview.entity.User;
 import com.bytedance.lemon.recyclerview.repository.UserRepository;
@@ -48,6 +55,13 @@ public class RecyclerViewActivity extends AppCompatActivity {
     //防止搜索抖动
     private final Handler mSearchHandler = new Handler(Looper.getMainLooper());
     private Runnable mSearchRunnable;
+
+
+    private Button mWidgetTestButton;
+    private TextView mWidgetStatusText;
+
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,6 +87,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
         DividerItemDecoration divider = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         mRecyclerView.addItemDecoration(divider);
 
+//        setupWidgetControls();
 
         // 5. 【核心】观察数据库数据变化，自动更新UI
         userRepository.getAllUsersLive().observe(this, new Observer<List<User>>() {
@@ -132,9 +147,64 @@ public class RecyclerViewActivity extends AppCompatActivity {
         setupSearchView();
 
 
-
+//        setupWidgetControls();
 
     }
+
+//    // 添加方法
+//    private void setupWidgetControls() {
+//        LinearLayout controlLayout = findViewById(R.id.control_layout); // 如果布局中没有，可以创建一个
+//
+//        mWidgetTestButton = findViewById(R.id.widget_test_button);
+//        mWidgetStatusText = findViewById(R.id.widget_status_text);
+//
+//        if (controlLayout != null && mWidgetTestButton != null) {
+//            mWidgetTestButton.setOnClickListener(v -> testWidgetAlert());
+//            controlLayout.setVisibility(View.VISIBLE);
+//            checkWidgetStatus();
+//        }
+//
+//        // 检查Widget状态
+//        checkWidgetStatus();
+//    }
+//
+//
+//
+//
+//    private void checkWidgetStatus() {
+//        new Thread(() -> {
+//            boolean isWidgetActive = userRepository.isWidgetActive();
+//
+//            runOnUiThread(() -> {
+//                if (isWidgetActive) {
+//                    mWidgetStatusText.setText("✅ Widget状态: 已添加到桌面");
+//                    mWidgetStatusText.setTextColor(Color.parseColor("#4CAF50"));
+//                } else {
+//                    mWidgetStatusText.setText("⚠️ Widget状态: 未添加到桌面");
+//                    mWidgetStatusText.setTextColor(Color.parseColor("#FF9800"));
+//                }
+//            });
+//        }).start();
+//    }
+//
+//    private void testWidgetAlert() {
+//        userRepository.testWidgetAlert();
+//        Toast.makeText(this, "Widget触达测试已发送", Toast.LENGTH_SHORT).show();
+//    }
+//
+//
+//
+//
+//
+//
+//
+//
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        checkWidgetStatus();
+//    }
+
 
     // 模拟从网络获取刷新数据
     private void simulateRefreshFromNetwork() {

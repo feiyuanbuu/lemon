@@ -33,6 +33,25 @@
 
         <activity android:name=".ChatActivity"
             android:theme="@style/Theme.Lemon"/>
+
+
+        <!-- 添加Widget声明 -->
+        <receiver
+            android:name=".recyclerview.widget.MessageAlertWidget"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.bytedance.lemon.UPDATE_WIDGET" />
+                <action android:name="com.bytedance.lemon.CLICK_WIDGET" />
+                <action android:name="com.bytedance.lemon.CLOSE_WIDGET" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/message_alert_widget_info" />
+        </receiver>
+
+
     </application>
 
 </manifest>
