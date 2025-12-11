@@ -105,13 +105,25 @@
 
 ## 💡 使用示例
 
-<div align="center">
-
-<img src="./assets/splash.png" alt="开屏界面"/>
-<img src="./assets/list.png" alt="开屏界面"/>
-<img src="./assets/profile.png" alt="开屏界面"/>
-<img src="./assets/chat.png" alt="开屏界面"/>
-
+<div align="center" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+  <div style="flex: 1 1 45%; min-width: 300px;">
+    <img src="./assets/splash.png" alt="开屏界面" style="max-width: 100%; height: auto;"/>
+  </div>
+  <div style="flex: 1 1 45%; min-width: 300px;">
+    <img src="./assets/list.png" alt="列表界面" style="max-width: 100%; height: auto;"/>
+  </div>
+  <div style="flex: 1 1 45%; min-width: 300px;">
+    <img src="./assets/profile.png" alt="个人资料界面" style="max-width: 100%; height: auto;"/>
+  </div>
+  <div style="flex: 1 1 45%; min-width: 300px;">
+    <img src="./assets/chat.png" alt="聊天界面" style="max-width: 100%; height: auto;"/>
+  </div>
+    <div style="flex: 1 1 45%; min-width: 300px;">
+    <img src="./assets/reward.png" alt="奖励界面" style="max-width: 100%; height: auto;"/>
+  </div>
+    <div style="flex: 1 1 45%; min-width: 300px;">
+    <img src="./assets/widget.png" alt="小组件界面" style="max-width: 100%; height: auto;"/>
+  </div>
 </div>
 
 ## 📷 模拟器
@@ -122,4 +134,6 @@
 
 ## ⏩ 最近更新
 
-- **2025.01.13**：🎉 2025.12.08开源发布
+- **2025.12.08**：🎉 开源发布
+
+- **2025.12.10**：📢 增加桌面小组件
