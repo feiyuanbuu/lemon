@@ -68,6 +68,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserViewHolder> {
         return mSearchKeyword;
     }
 
+    // 添加长按监听器接口
+    public interface OnUserLongClickListener {
+        void onUserLongClick(User user, int position, View anchorView);
+    }
+
+    private OnUserLongClickListener onUserLongClickListener;
+
+    // 设置长按监听器的方法
+    public void setOnUserLongClickListener(OnUserLongClickListener listener) {
+        this.onUserLongClickListener = listener;
+    }
 
     @NonNull
     @Override
@@ -256,6 +267,44 @@ public class UserAdapter extends RecyclerView.Adapter<UserViewHolder> {
             }
         });
 
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                int currentPosition = holder.getBindingAdapterPosition();
+                if (currentPosition == RecyclerView.NO_POSITION) return false;
+
+                User currentUser = mUserList.get(currentPosition);
+
+                if (onUserLongClickListener != null) {
+                    // 传递用户、位置和锚点视图（用于显示菜单）
+                    onUserLongClickListener.onUserLongClick(currentUser, currentPosition, holder.itemView);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+
+    }
+
+    public void removeUser(int position) {
+        if (position >= 0 && position < mUserList.size()) {
+            mUserList.remove(position);
+            notifyItemRemoved(position);
+            // 通知范围更改，确保后续项位置正确
+            notifyItemRangeChanged(position, mUserList.size() - position);
+        }
+    }
+
+
+    public void removeUserById(long userId) {
+        for (int i = 0; i < mUserList.size(); i++) {
+            if (mUserList.get(i).getId() == userId) {
+                removeUser(i);
+                break;
+            }
+        }
     }
 
     private void updatePinnedUI(UserViewHolder holder, User user) {

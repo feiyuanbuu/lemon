@@ -4,6 +4,7 @@ package com.bytedance.lemon.recyclerview.database;
 import androidx.lifecycle.LiveData;
 import androidx.room.ColumnInfo;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -22,6 +23,10 @@ public interface MessageDao {
 
     @Update
     void update(Usermessage message);
+
+
+    @Delete
+    void delete(Usermessage message);
 
     @Insert
     void insert(Usermessage message);
@@ -82,18 +87,38 @@ public interface MessageDao {
     @Query("UPDATE user_messages SET message_is_read= 1 WHERE user_id = :userId")
     void markAllAsReadByUserId(Long userId);
 
-    // 获取用户未读消息数量（messageType = 0且未读）
-    @Query("SELECT COUNT(*) FROM user_messages WHERE user_id = :userId AND message_type = 0 AND message_is_read = 0")
+    // 获取用户未读消息数量（messageType = 0或者2且未读）
+    @Query("SELECT COUNT(*) FROM user_messages WHERE user_id = :userId AND message_type IN (0,2) AND message_is_read = 0")
     int getUnreadInfoCount(Long userId);
 
     // 获取所有用户的未读消息数量（messageType = 0且未读）
-    @Query("SELECT user_id, COUNT(*) as unread_count FROM user_messages WHERE message_type = 0 AND message_is_read = 0 GROUP BY user_id")
+    @Query("SELECT user_id, COUNT(*) as unread_count FROM user_messages WHERE message_type IN (0,2) AND message_is_read = 0 GROUP BY user_id")
     List<UserUnreadCount> getAllUsersUnreadCount();
 
     // 新增：获取运营消息
     @Query("SELECT * FROM user_messages WHERE message_type = 2 ORDER BY timestamp DESC")
     LiveData<List<Usermessage>> getOperationMessagesLive();
 
+
+    // 新增：根据接收者ID删除消息
+    @Query("DELETE FROM user_messages WHERE receiver_id = :receiverId")
+    void deleteMessagesByReceiverId(long receiverId);
+
+    // 新增：删除指定ID的消息
+    @Query("DELETE FROM user_messages WHERE id = :messageId")
+    void deleteMessageById(long messageId);
+
+    // 新增：批量删除消息
+    @Query("DELETE FROM user_messages WHERE id IN (:messageIds)")
+    void deleteMessagesByIds(List<Long> messageIds);
+
+    // 新增：删除指定用户发送或接收的所有消息
+    @Query("DELETE FROM user_messages WHERE user_id = :userId ")
+    void deleteAllMessagesRelatedToUser(long userId);
+
+    // 新增：删除指定时间之前的消息
+    @Query("DELETE FROM user_messages WHERE timestamp < :timestamp")
+    void deleteMessagesBefore(long timestamp);
 
     // 用于查询结果的临时类
     class UserUnreadCount {

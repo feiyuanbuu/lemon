@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- 全部标记为已读 -->
+    <item
+        android:id="@+id/menu_mark_all_read"
+        android:title="全部标记为已读"
+        android:icon="@drawable/ic_mark_all_read"
+        app:showAsAction="never" />
+
+    <!-- 当前维度消息数量统计 -->
+    <item
+        android:id="@+id/menu_message_stats"
+        android:title="当前消息数量统计"
+        android:icon="@drawable/ic_statistics"
+        app:showAsAction="never" />
+
+</menu>

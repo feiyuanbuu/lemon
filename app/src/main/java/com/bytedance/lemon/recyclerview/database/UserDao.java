@@ -95,6 +95,19 @@ public interface UserDao {
     @Query("UPDATE users SET is_pined = CASE WHEN is_pined = 1 THEN 0 ELSE 1 END WHERE id = :userId")
     void togglePinnedStatus(Long userId);
 
+    @Query("DELETE FROM users WHERE id = :userId")
+    void deleteUserById(long userId);
 
+    // 批量删除用户
+    @Query("DELETE FROM users WHERE id IN (:userIds)")
+    void deleteUsersByIds(List<Long> userIds);
+
+    // 删除所有未置顶的用户
+    @Query("DELETE FROM users WHERE is_pined = 0")
+    void deleteAllUnpinnedUsers();
+
+    // 删除指定时间之前创建的用户
+    @Query("DELETE FROM users WHERE create_timestamp < :timestamp")
+    void deleteUsersBefore(long timestamp);
 
 }

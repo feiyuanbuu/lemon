@@ -101,6 +101,7 @@
     - ✔统计每日未读消息数
 2. 聊天界面支持文本框输入，输入内容Room本地持久化
 3. 桌面小组件Lemon chat, 实时更新消息，点击消息进入ChatActivity
+4. 支持删除用户或用户所有的聊天记录
 
 
 ## 💡 使用示例
@@ -119,6 +120,10 @@
       <td style="padding: 5px;"><img src="./assets/reward.png" alt="奖励界面" style="max-width: 100%; height: auto;"/></td>
       <td style="padding: 5px;"><img src="./assets/widget.png" alt="小组件界面" style="max-width: 100%; height: auto;"/></td>
     </tr>
+        <tr>
+      <td style="padding: 5px;"><img src="./assets/delete.png" alt="奖励界面" style="max-width: 100%; height: auto;"/></td>
+      <td style="padding: 5px;"><img src="./assets/data_statistics.png" alt="小组件界面" style="max-width: 100%; height: auto;"/></td>
+    </tr>
   </table>
 </div>
 
@@ -131,5 +136,5 @@
 ## ⏩ 最近更新
 
 - **2025.12.08**：🎉 开源发布
-
 - **2025.12.10**：📢 增加桌面小组件
+- **2025.12.11**：📢 增加消息数量统计及用户与聊天记录删除

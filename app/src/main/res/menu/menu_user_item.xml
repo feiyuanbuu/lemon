@@ -1,0 +1,38 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- 标题项（不可点击） -->
+    <item
+        android:id="@+id/menu_title"
+        android:title="用户名"
+        android:enabled="false"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_view_profile"
+        android:title="查看资料"
+        android:icon="@drawable/stars"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_mark_all_read"
+        android:title="标记已读"
+        android:icon="@drawable/ic_mark_read"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_copy_user_id"
+        android:title="复制用户ID"
+        android:icon="@drawable/ic_copy"
+        app:showAsAction="never" />
+
+    <!-- 分隔线 -->
+    <group android:id="@+id/group_danger">
+        <item
+            android:id="@+id/menu_delete"
+            android:title="删除用户"
+            android:icon="@drawable/ic_delete"
+            app:showAsAction="never" />
+    </group>
+
+</menu>

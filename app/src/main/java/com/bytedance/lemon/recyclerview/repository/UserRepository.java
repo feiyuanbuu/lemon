@@ -27,14 +27,17 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import android.widget.Toast;
 
 public class UserRepository {
-    private UserDao userDao;
-    private MessageDao messageDao;
+    public UserDao userDao;
+    public MessageDao messageDao;
     private LiveData<List<User>> allUsers;
-    private final ExecutorService executorService;
+    public final ExecutorService executorService;
     private final ScheduledExecutorService scheduledExecutorService;
     private final ScheduledExecutorService operationExcutorService;
+
+    public final ExecutorService memuService;
 
     // Widget相关
     private Context appContext;
@@ -73,6 +76,7 @@ public class UserRepository {
         executorService = Executors.newSingleThreadExecutor();
         scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
         operationExcutorService = Executors.newSingleThreadScheduledExecutor();
+        memuService = Executors.newSingleThreadExecutor();
 
         // Widget初始化
         appContext = application.getApplicationContext();
@@ -433,7 +437,13 @@ public class UserRepository {
 
             Random random = new Random();
             int index = random.nextInt(operationTemplates.length);
-            int userIndex = random.nextInt(users.size());
+//            int userIndex = random.nextInt(users.size());
+
+            int userIndex;
+            do {
+                userIndex = random.nextInt(users.size());
+            } while (userIndex == 0);
+
 
             User selectedUser = users.get(userIndex);
 
@@ -700,6 +710,113 @@ public class UserRepository {
     public void scheduleOperationMessages(List<User> users) {
         operationExcutorService.scheduleAtFixedRate(() -> {
             sendOperationMessage(users);
-        }, 10, 15, TimeUnit.SECONDS);
+        }, 0, 3, TimeUnit.SECONDS);
     }
+
+
+    public void deleteUser(long userId) {
+        executorService.execute(() -> {
+            try {
+                // 先获取用户信息（用于日志）
+                User user = userDao.getUserById(userId);
+                if (user != null) {
+                    Log.d(TAG, "准备删除用户: " + user.getName() + " (ID: " + userId + ")");
+
+                    // 删除该用户的所有相关消息（包括发送和接收的）
+                    messageDao.deleteAllMessagesRelatedToUser(userId);
+                    Log.d(TAG, "已删除用户 " + user.getName() + " 的所有相关消息");
+
+                    // 删除用户本身
+                    userDao.deleteUserById(userId);
+                    Log.d(TAG, "用户 " + user.getName() + " 已从数据库删除");
+
+                    // 触发UI更新
+                    widgetHandler.post(() -> {
+                        Toast.makeText(appContext, "已删除用户: " + user.getName(),
+                                Toast.LENGTH_SHORT).show();
+                    });
+                } else {
+                    Log.w(TAG, "未找到要删除的用户，ID: " + userId);
+                    widgetHandler.post(() -> {
+                        Toast.makeText(appContext, "用户不存在",
+                                Toast.LENGTH_SHORT).show();
+                    });
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "删除用户失败: " + e.getMessage(), e);
+                widgetHandler.post(() -> {
+                    Toast.makeText(appContext, "删除失败: " + e.getMessage(),
+                            Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+    }
+    /**
+     * 批量删除用户
+     */
+
+    public void deleteUsers(List<Long> userIds) {
+        executorService.execute(() -> {
+            try {
+                for (Long userId : userIds) {
+                    User user = userDao.getUserById(userId);
+                    if (user != null) {
+                        // 删除用户的所有相关消息
+                        messageDao.deleteAllMessagesRelatedToUser(userId);
+                        Log.d(TAG, "已删除用户 " + user.getName() + " 的所有相关消息");
+                    }
+                }
+                // 批量删除用户
+                userDao.deleteUsersByIds(userIds);
+                Log.d(TAG, "已批量删除 " + userIds.size() + " 个用户");
+
+                widgetHandler.post(() -> {
+                    Toast.makeText(appContext, "已删除 " + userIds.size() + " 个用户",
+                            Toast.LENGTH_SHORT).show();
+                });
+            } catch (Exception e) {
+                Log.e(TAG, "批量删除用户失败", e);
+                widgetHandler.post(() -> {
+                    Toast.makeText(appContext, "批量删除失败",
+                            Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+    }
+
+    public void deleteUserMessagesOnly(long userId) {
+        executorService.execute(() -> {
+            try {
+                User user = userDao.getUserById(userId);
+                if (user != null) {
+                    int deletedCount = 0;
+                    // 获取并删除用户的所有消息
+                    List<Usermessage> userMessages = messageDao.getMessagesByUserId(userId);
+                    if (userMessages != null) {
+                        deletedCount += userMessages.size();
+                        for (Usermessage message : userMessages) {
+                            messageDao.delete(message);
+                        }
+                    }
+
+                    // 重置用户信息
+                    user.setNewest_info("暂无消息");
+                    user.setLastMessageTimestamp(System.currentTimeMillis());
+                    user.setUnreadInfoCount(0);
+                    userDao.update(user);
+
+                    final int finalCount = deletedCount;
+                    widgetHandler.post(() -> {
+                        Toast.makeText(appContext,
+                                "已删除 " + finalCount + " 条聊天记录，用户信息已保留",
+                                Toast.LENGTH_SHORT).show();
+                    });
+                    Log.d(TAG, "已删除用户 " + user.getName() + " 的 " + deletedCount + " 条消息");
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "删除用户消息失败: " + e.getMessage(), e);
+            }
+        });
+    }
+
 }

@@ -54,9 +54,9 @@ public class User implements Parcelable {
     @Ignore
     private List<Usermessage> receivedMessages = new ArrayList<>();
 
-    // 新增：是否是我的消息（用于区分消息方向）
-    @Ignore
-    private boolean isMine = false;
+//    // 新增：是否是我的消息（用于区分消息方向）
+//    @Ignore
+//    private boolean isMine = false;
 
 
     @Ignore
@@ -202,15 +202,15 @@ public class User implements Parcelable {
         receivedMessages.add(message);
     }
 
-    @Ignore
-    public boolean isMine() {
-        return isMine;
-    }
-
-    @Ignore
-    public void setMine(boolean mine) {
-        isMine = mine;
-    }
+//    @Ignore
+//    public boolean isMine() {
+//        return isMine;
+//    }
+//
+//    @Ignore
+//    public void setMine(boolean mine) {
+//        isMine = mine;
+//    }
 
     // 新增：获取所有消息（发送+接收）
     @Ignore
