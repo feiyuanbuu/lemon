@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:columnCount="3"
+    android:padding="16dp"
+    android:layout_margin="16dp"
+    android:rowCount="3"
+    android:useDefaultMargins="true">
+
+    <!-- useDefaultMargins=true 会自动添加边距 -->
+
+    <TextView
+        android:id="@+id/item_1"
+        style="@style/GridItem"
+        android:background="#4CAF50"
+        android:text="Item 1" />
+
+    <TextView
+        android:id="@+id/item_2"
+        style="@style/GridItem"
+        android:background="#FF9800"
+        android:text="Item 2" />
+
+    <TextView
+        android:id="@+id/item_3"
+        style="@style/GridItem"
+        android:background="#9C27B0"
+        android:text="Item 3" />
+
+    <TextView
+        android:id="@+id/item_4"
+        style="@style/GridItem"
+        android:background="#2196F3"
+        android:text="Item 4" />
+
+    <TextView
+        android:id="@+id/item_5"
+        style="@style/GridItem"
+        android:background="#795548"
+        android:text="Item 5" />
+
+    <TextView
+        android:id="@+id/item_6"
+        style="@style/GridItem"
+        android:background="#F44336"
+        android:text="Item 6" />
+
+    <Button
+        android:id="@+id/span_button"
+        android:layout_columnSpan="3"
+        android:layout_gravity="fill_horizontal"
+        android:background="@color/primary"
+        android:text="让 Item 跨 3 列" />
+
+</GridLayout>
