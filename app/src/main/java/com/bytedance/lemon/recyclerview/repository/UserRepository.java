@@ -27,6 +27,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+
 import android.widget.Toast;
 
 public class UserRepository {
@@ -117,7 +119,7 @@ public class UserRepository {
                     widgetIntent.putExtra("timestamp", sender.getLastMessageTimestamp());
 
                     appContext.sendBroadcast(widgetIntent);
-                    Log.d(TAG, "Widget触发广播已发送: " + sender.getName() + " - " + message);
+//                    Log.d(TAG, "Widget触发广播已发送: " + sender.getName() + " - " + message);
 
                     // 取消之前的自动清除任务（如果存在）
                     if (widgetAutoClearRunnable != null) {
@@ -229,7 +231,8 @@ public class UserRepository {
 
         executorService.execute(() -> {
             List<User> users = getAllUsers();
-            Log.d(TAG, "获取到的用户数量: " + (users != null ? users.size() : 0));
+//            Log.d(TAG, "获取到的用户数量: " + (users != null ? users.size() : 0));
+            List<User> users_without_zero = getAllUsersWithoutZeroId();
 
             if (users != null && users.size() >= 2) {
                 selectRandomTwoUsers(users);
@@ -237,9 +240,9 @@ public class UserRepository {
                 User user1 = getUserById(autoMessageUserIds[0]);
                 User user2 = getUserById(autoMessageUserIds[1]);
 
-                Log.d(TAG, "随机选择的两个用户: " +
-                        (user1 != null ? user1.getName() : "用户1") + " (ID: " + autoMessageUserIds[0] + ") 和 " +
-                        (user2 != null ? user2.getName() : "用户2") + " (ID: " + autoMessageUserIds[1] + ")");
+//                Log.d(TAG, "随机选择的两个用户: " +
+//                        (user1 != null ? user1.getName() : "用户1") + " (ID: " + autoMessageUserIds[0] + ") 和 " +
+//                        (user2 != null ? user2.getName() : "用户2") + " (ID: " + autoMessageUserIds[1] + ")");
 
                 // 发送初始消息，并触发Widget
                 String[] initialMessages = {"你好！这是第一条自动消息", "你好！我也收到自动消息了"};
@@ -265,18 +268,18 @@ public class UserRepository {
                     sendAutoMessage();
                 }, 10, 10, TimeUnit.SECONDS);
 
-                scheduleOperationMessages(users);
+                scheduleOperationMessages(users_without_zero);
 
 
                 isAutoMessagingStarted = true;
-                Log.d(TAG, "自动消息发送已启动，每10秒向随机两个用户发送消息给我方");
+//                Log.d(TAG, "自动消息发送已启动，每10秒向随机两个用户发送消息给我方");
             } else if (users != null && users.size() == 1) {
                 autoMessageUserIds[0] = users.get(0).getId();
                 autoMessageUserIds[1] = users.get(0).getId();
 
                 User user = getUserById(autoMessageUserIds[0]);
                 if (user != null) {
-                    Log.d(TAG, "只有一个用户: " + user.getName() + "，将向他发送自动消息给我方");
+//                    Log.d(TAG, "只有一个用户: " + user.getName() + "，将向他发送自动消息给我方");
 
                     // 发送初始消息并触发Widget
                     String initialMessage = "你好！这是自动消息";
@@ -316,7 +319,7 @@ public class UserRepository {
             String userName = user.getName();
             String messageContent = autoMessages[currentMessageIndex % autoMessages.length];
 
-            Log.d(TAG, "向用户 " + userName + " (ID: " + userId + ") 发送消息给我方: " + messageContent);
+//            Log.d(TAG, "向用户 " + userName + " (ID: " + userId + ") 发送消息给我方: " + messageContent);
 
             // 创建消息对象
             Usermessage message = new Usermessage(
@@ -364,7 +367,7 @@ public class UserRepository {
                                 sender.setLastMessageTimestamp(message.getTimestamp());
                                 sender.incrementUnreadCount();
                                 userDao.update(sender);
-                                Log.d(TAG, "已更新发送方用户最新消息: " + sender.getName());
+//                                Log.d(TAG, "已更新发送方用户最新消息: " + sender.getName());
                                 triggerWidgetAlert(sender, message.getContent());
                                 // 【新增】对于接收的消息，可能触发Widget（但自动消息已经在sendAutoMessage中触发了）
                                 // 这里主要是为了手动发送的消息
@@ -381,7 +384,7 @@ public class UserRepository {
                             receiver.setNewest_info(message.getContent());
                             receiver.setLastMessageTimestamp(message.getTimestamp());
                             userDao.update(receiver);
-                            Log.d(TAG, "已更新接收方用户最新消息: " + receiver.getName());
+//                            Log.d(TAG, "已更新接收方用户最新消息: " + receiver.getName());
                         }
                         break;
 
@@ -394,7 +397,7 @@ public class UserRepository {
                             operationSender.incrementUnreadCount();
                             userDao.incrementUnreadInfoCount(operationSender.getId());
                             userDao.update(operationSender);
-                            Log.d(TAG, "已更新运营消息接收方用户: " + operationSender.getName());
+//                            Log.d(TAG, "已更新运营消息接收方用户: " + operationSender.getName());
 
                             // 【新增】运营消息也触发Widget
                             triggerWidgetAlert(operationSender, message.getContent());
@@ -437,13 +440,17 @@ public class UserRepository {
 
             Random random = new Random();
             int index = random.nextInt(operationTemplates.length);
-//            int userIndex = random.nextInt(users.size());
+//            // 方法1：过滤掉ID为0的用户
+//            List<User> validUsers = users.stream()
+//                    .filter(user -> user.getId() != 0)
+//                    .collect(Collectors.toList());
+//
+//            if (validUsers.isEmpty()) {
+//                Log.d(TAG, "没有有效的用户可发送运营消息");
+//                return;
+//            }
 
-            int userIndex;
-            do {
-                userIndex = random.nextInt(users.size());
-            } while (userIndex == 0);
-
+            int userIndex = random.nextInt(users.size());
 
             User selectedUser = users.get(userIndex);
 
@@ -462,7 +469,7 @@ public class UserRepository {
             // 【新增】运营消息触发Widget
 //            triggerWidgetAlert(selectedUser, operationTemplates[index]);
 
-            Log.d(TAG, "用户" + selectedUser.getName() + "已发送运营消息: " + operationTemplates[index]);
+//            Log.d(TAG, "用户" + selectedUser.getName() + "已发送运营消息: " + operationTemplates[index]);
         });
     }
 
@@ -616,6 +623,10 @@ public class UserRepository {
 
     private List<User> getAllUsers() {
         return userDao.getAllUsers();
+    }
+
+    private List<User> getAllUsersWithoutZeroId(){
+        return userDao.getAllUsersWithoutZeroId();
     }
 
     private User getUserById(long userId) {

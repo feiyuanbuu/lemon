@@ -53,6 +53,10 @@ import com.bytedance.lemon.recyclerview.entity.User;
 import com.bytedance.lemon.recyclerview.repository.UserRepository;
 
 
+
+
+//当前的bug
+//对于上拉刷新窗口增加用户数量后，发送消息还是会在用户增加之前的哪些人中随机选择，而不会在新增用户后所有的list中随机选择
 //增加搜索功能
 import androidx.appcompat.widget.SearchView;
 

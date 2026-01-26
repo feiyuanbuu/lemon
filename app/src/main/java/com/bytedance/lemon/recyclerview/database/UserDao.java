@@ -49,12 +49,18 @@ public interface UserDao {
     LiveData<User> getUserByIdLive(long userId);
 
 
-    // 搜索时也要按置顶状态排序
+//    // 搜索时也要按置顶状态排序
+//    @Query("SELECT * FROM users WHERE name LIKE '%' || :searchQuery || '%' " +
+//            "OR user_description LIKE '%' || :searchQuery || '%' " +
+//            "OR newest_info LIKE '%' || :searchQuery || '%' " +
+//            "ORDER BY is_pined DESC, last_message_timestamp DESC, create_timestamp DESC")
+//    LiveData<List<User>> searchUsersLive(String searchQuery);
+// 搜索时也要按置顶状态排序
     @Query("SELECT * FROM users WHERE name LIKE '%' || :searchQuery || '%' " +
-            "OR user_description LIKE '%' || :searchQuery || '%' " +
             "OR newest_info LIKE '%' || :searchQuery || '%' " +
             "ORDER BY is_pined DESC, last_message_timestamp DESC, create_timestamp DESC")
     LiveData<List<User>> searchUsersLive(String searchQuery);
+
 
 
     // 同步查询所有用户（用于后台线程）按 pinned 状态优先
@@ -109,5 +115,10 @@ public interface UserDao {
     // 删除指定时间之前创建的用户
     @Query("DELETE FROM users WHERE create_timestamp < :timestamp")
     void deleteUsersBefore(long timestamp);
+
+    // 同步查询所有ID不为0的用户（按 pinned 状态优先）
+    @Query("SELECT * FROM users WHERE id != 0 ORDER BY is_pined DESC, last_message_timestamp DESC, create_timestamp DESC")
+    List<User> getAllUsersWithoutZeroId();
+
 
 }
